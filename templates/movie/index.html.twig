@@ -1,0 +1,59 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}All movies !{% endblock %}
+
+{% block body %}
+    <h1 style="text-align: center">All movies</h1>
+    <div class="row">
+        <div class="col-9">
+            <div class="row">
+                {% for movie in movies %}
+                    <div class="col-4">
+                        <div class="card text-white bg-info mb-3">
+                            <div class="card-header">Original Title : {{ movie.originalName|capitalize }}</div>
+                            <div class="card-body">
+                                <h4 class="card-title">{{ movie.name|capitalize }}</h4>
+                                {#                        <h5 class="card-title">{{ movie.releaseDate|date("m/d/Y") }}</h5>#}
+                                {% if movie.image is not null %}
+                                    <img style="width: 100%" src="/assets/upload/images/{{ movie.image }}" alt="{{ movie.name }}">
+                                {% endif %}
+                                <p class="card-text">Release date : {{ movie.releaseDate|date("m/d/Y") }}</p>
+                                <p class="card-text">Studio : {{ movie.studio }}</p>
+                                <p class="card-text" >Synopsis : {{ movie.synopsis|raw }}</p>
+                                <p class="card-text">{{ movie.seen }}</p>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+        <div class="col-3">
+            {% if actors is defined %}
+                <h2>Actors list</h2>
+                <ul class="list-group">
+                    {% for actor in actors %}
+                        <li class="list-group-item d-flex justify-content-between align-items-center">
+                            <a href="/actor/{{ actor.id }}">
+                                {{ actor.firstName }} {{ actor.lastName }}
+                            </a>
+                            <span class="badge bg-primary rounded-pill">{{ actor.movies|length }}</span>
+                        </li>
+                    {% endfor %}
+                </ul>
+            {% endif %}
+            {% if genres is defined %}
+                <h2>Genres list</h2>
+                <ul class="list-group">
+                    {% for genre in genres %}
+                        <li class="list-group-item d-flex justify-content-between align-items-center">
+                            <a href="/genre/{{ genre.id }}">
+                                {{ genre.name }}
+                            </a>
+                            <span class="badge bg-primary rounded-pill">{{ genre.movies|length }}</span>
+                        </li>
+                    {% endfor %}
+                </ul>
+            {% endif %}
+        </div>
+    </div>
+{% endblock %}
