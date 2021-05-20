@@ -39,7 +39,8 @@ class MovieController extends AbstractController
         if (!$genre)
             return $this->redirectToRoute('movies');
         return $this->render('movie/index.html.twig', [
-            'movies' => $genre->getMovies()
+            'movies' => $genre->getMovies(),
+            'genre' => $genre
         ]);
     }
     #[Route('/actor/{id}', name: 'moviesByActor')]
@@ -48,7 +49,8 @@ class MovieController extends AbstractController
         if (!$actor)
             return $this->redirectToRoute('movies');
         return $this->render('movie/index.html.twig', [
-            'movies' => $actor->getMovies()
+            'movies' => $actor->getMovies(),
+            'actor' => $actor
         ]);
     }
     #[Route('/studio/{id}', name: 'moviesByStudio')]
@@ -57,7 +59,8 @@ class MovieController extends AbstractController
         if (!$studio)
             return $this->redirectToRoute('movies');
         return $this->render('movie/index.html.twig', [
-            'movies' => $studio->getMovies()
+            'movies' => $studio->getMovies(),
+            'studio' => $studio
         ]);
     }
 

@@ -4,6 +4,8 @@ namespace App\Controller\Admin;
 
 use App\Entity\Actor;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
+use EasyCorp\Bundle\EasyAdminBundle\Field\ImageField;
+use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
 
 class ActorCrudController extends AbstractCrudController
 {
@@ -12,14 +14,15 @@ class ActorCrudController extends AbstractCrudController
         return Actor::class;
     }
 
-    /*
+
     public function configureFields(string $pageName): iterable
     {
         return [
-            IdField::new('id'),
-            TextField::new('title'),
-            TextEditorField::new('description'),
+            TextField::new('firstName'),
+            TextField::new('lastName'),
+            ImageField::new('image')->setUploadDir("/public/assets/upload/images")
+                                                ->setBasePath('assets/upload/images')
         ];
     }
-    */
+
 }

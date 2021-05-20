@@ -3,7 +3,18 @@
 {% block title %}All movies !{% endblock %}
 
 {% block body %}
-    <h1 style="text-align: center">All movies</h1>
+    {% if actor is defined %}
+        <div style="text-align: center">
+        <h1>{{ actor.firstName }} {{ actor.lastName }} movies</h1>
+        <img src="/assets/upload/images/{{ actor.image }}" alt="{{ actor.lastName }}" style="max-width: 300px;">
+        </div>
+    {% elseif genre is defined %}
+        <h1 style="text-align: center">{{ genre.name }} movies</h1>
+    {% elseif studio is defined %}
+        <h1 style="text-align: center">{{ studio.name }} movies</h1>
+    {% else %}
+        <h1 style="text-align: center">All movies</h1>
+    {% endif %}
     <div class="row">
         <div class="col-9">
             <div class="row">

@@ -6,6 +6,7 @@ use App\Entity\Actor;
 use App\Entity\Genre;
 use App\Entity\Movie;
 use App\Entity\Studio;
+use App\Entity\User;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Dashboard;
 use EasyCorp\Bundle\EasyAdminBundle\Config\MenuItem;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractDashboardController;
@@ -33,5 +34,6 @@ class DashboardController extends AbstractDashboardController
         yield MenuItem::linkToCrud('Studios', 'fas fa-list', Studio::class);
         yield MenuItem::linkToCrud('Actors', 'fas fa-list', Actor::class);
         yield MenuItem::linkToCrud('Genres', 'fas fa-list', Genre::class);
+        yield MenuItem::linkToCrud('Users', 'fas fa-list', User::class)->setPermission('ROLE_ADMIN');
     }
 }
