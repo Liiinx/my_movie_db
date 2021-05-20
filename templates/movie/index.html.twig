@@ -19,7 +19,9 @@
                                 {% endif %}
                                 <p class="card-text">Release date : {{ movie.releaseDate|date("m/d/Y") }}</p>
                                 <p class="card-text">Studio : {{ movie.studio }}</p>
-                                <p class="card-text" >Synopsis : {{ movie.synopsis|raw }}</p>
+                                <p class="card-text"style="
+                                                white-space: nowrap;
+                                                overflow: hidden; text-overflow: ellipsis;">Synopsis : {{ movie.synopsis|raw }}</p>
                                 <p class="card-text">{{ movie.seen }}</p>
                             </div>
                         </div>
@@ -33,7 +35,7 @@
                 <ul class="list-group">
                     {% for actor in actors %}
                         <li class="list-group-item d-flex justify-content-between align-items-center">
-                            <a href="/actor/{{ actor.id }}">
+                            <a href="{{ path('moviesByActor', {'id' : actor.id}) }}">
                                 {{ actor.firstName }} {{ actor.lastName }}
                             </a>
                             <span class="badge bg-primary rounded-pill">{{ actor.movies|length }}</span>
@@ -46,10 +48,23 @@
                 <ul class="list-group">
                     {% for genre in genres %}
                         <li class="list-group-item d-flex justify-content-between align-items-center">
-                            <a href="/genre/{{ genre.id }}">
+                            <a href="{{ path('moviesByGenre', { 'id': genre.id }) }}">
                                 {{ genre.name }}
                             </a>
                             <span class="badge bg-primary rounded-pill">{{ genre.movies|length }}</span>
+                        </li>
+                    {% endfor %}
+                </ul>
+            {% endif %}
+            {% if studios is defined %}
+                <h2>Studios list</h2>
+                <ul class="list-group">
+                    {% for studio in studios %}
+                        <li class="list-group-item d-flex justify-content-between align-items-center">
+                            <a href="{{ path('moviesByStudio', { 'id': studio.id }) }}">
+                                {{ studio.name }}
+                            </a>
+                            <span class="badge bg-primary rounded-pill">{{ studio.movies|length }}</span>
                         </li>
                     {% endfor %}
                 </ul>
