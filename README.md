@@ -7,4 +7,6 @@
 https://symfony.com/doc/current/doctrine.html
 * run `symfony console doctrine:database:create` to create your database
 * run `symfony console doctrine:fixtures:load` to create data inside
+* run `symfony server:start`
+* go to localhost in web navigator
 
