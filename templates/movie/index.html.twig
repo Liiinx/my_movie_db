@@ -4,16 +4,22 @@
 
 {% block body %}
     {% if actor is defined %}
-        <div style="text-align: center">
-        <h1>{{ actor.firstName }} {{ actor.lastName }} movies</h1>
-        <img src="/assets/upload/images/{{ actor.image }}" alt="{{ actor.lastName }}" style="max-width: 300px;">
+    <div style="text-align: center">
+    <h1>{{ actor.firstName }} {{ actor.lastName }} movies</h1>
+        {% if actor.image is not null %}
+            {% if actor.image starts with 'http' %}
+                <img style="max-width: 300px" src="{{ actor.image }}" alt="{{ actor.lastName }}" />
+            {% else %}
+                <img src="/assets/upload/images/{{ actor.image }}" alt="{{ actor.lastName }}" style="max-width: 300px;">
+            {% endif %}
+        {% endif %}
         </div>
-    {% elseif genre is defined %}
-        <h1 style="text-align: center">{{ genre.name }} movies</h1>
-    {% elseif studio is defined %}
-        <h1 style="text-align: center">{{ studio.name }} movies</h1>
-    {% else %}
-        <h1 style="text-align: center">All movies</h1>
+        {% elseif genre is defined %}
+            <h1 style="text-align: center">{{ genre.name }} movies</h1>
+        {% elseif studio is defined %}
+            <h1 style="text-align: center">{{ studio.name }} movies</h1>
+        {% else %}
+            <h1 style="text-align: center">All movies</h1>
     {% endif %}
     <div class="row">
         <div class="col-9">
@@ -24,16 +30,23 @@
                             <div class="card-header">Original Title : {{ movie.originalName|capitalize }}</div>
                             <div class="card-body">
                                 <h4 class="card-title">{{ movie.name|capitalize }}</h4>
-                                {#                        <h5 class="card-title">{{ movie.releaseDate|date("m/d/Y") }}</h5>#}
                                 {% if movie.image is not null %}
+                                    {% if movie.image starts with 'http' %}
+                                        <img style="width: 100%" src="{{ movie.image }}" alt="{{ movie.name }}" />
+                                    {% else %}
                                     <img style="width: 100%" src="/assets/upload/images/{{ movie.image }}" alt="{{ movie.name }}">
+                                    {% endif %}
                                 {% endif %}
                                 <p class="card-text">Release date : {{ movie.releaseDate|date("m/d/Y") }}</p>
                                 <p class="card-text">Studio : {{ movie.studio }}</p>
                                 <p class="card-text"style="
                                                 white-space: nowrap;
                                                 overflow: hidden; text-overflow: ellipsis;">Synopsis : {{ movie.synopsis|raw }}</p>
-                                <p class="card-text">{{ movie.seen }}</p>
+                                {% if movie.seen %}
+                                    <p class="card-taxt">J'ai vu le film</p>
+                                {% else %}
+                                    <p class="card-taxt">Pas vu le film</p>
+                                {% endif %}
                             </div>
                         </div>
                     </div>

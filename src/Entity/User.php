@@ -100,7 +100,6 @@ class User implements UserInterface
     {
         $encoder = new SodiumPasswordEncoder();
         $this->password = $encoder->encodePassword($password, $this->getSalt());
-
         return $this;
     }
 
