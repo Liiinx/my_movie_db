@@ -70,10 +70,16 @@ class Movie
      */
     private $genres;
 
+    /**
+     * @ORM\ManyToMany(targetEntity=User::class, inversedBy="movies")
+     */
+    private $users;
+
     public function __construct()
     {
         $this->actors = new ArrayCollection();
         $this->genres = new ArrayCollection();
+        $this->users = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -221,6 +227,30 @@ class Movie
     public function removeGenre(Genre $genre): self
     {
         $this->genres->removeElement($genre);
+
+        return $this;
+    }
+
+    /**
+     * @return Collection
+     */
+    public function getUsers(): Collection
+    {
+        return $this->users;
+    }
+
+    public function addUser(User $user): self
+    {
+        if (!$this->users->contains($user)) {
+            $this->users[] = $user;
+        }
+
+        return $this;
+    }
+
+    public function removeUser(User $user): self
+    {
+        $this->users->removeElement($user);
 
         return $this;
     }

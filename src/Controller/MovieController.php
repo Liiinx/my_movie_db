@@ -9,6 +9,7 @@ use App\Repository\ActorRepository;
 use App\Repository\GenreRepository;
 use App\Repository\MovieRepository;
 use App\Repository\StudioRepository;
+use App\Repository\UserRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -21,16 +22,30 @@ class MovieController extends AbstractController
                                  ActorRepository $actorRepository,
                                  StudioRepository $studioRepository): Response
     {
-        $movies = $movieRepository->findAll();
-        $actors = $actorRepository->findAll();
-        $genres = $genreRepository->findAll();
-        $studios = $studioRepository->findAll();
-        return $this->render('movie/index.html.twig', [
-            'movies' => $movies,
-            'genres' => $genres,
-            'studios' => $studios,
-            'actors' => $actors
-        ]);
+        if ($this->getUser()) {
+            $user = $this->getUser();
+            $movies = $user->getMovies();
+//            foreach ($movies as $movie) {
+//                $actors[] = $movie->getActors();
+//                $genres[] = $movie->getGenres();
+//                $studios[] = $movie->getStudio();
+//            }
+            return $this->render('movie/index.html.twig', [
+                'movies' => $movies,
+                'user' => $user,
+            ]);
+        } else {
+            $movies = $movieRepository->findAll();
+            $actors = $actorRepository->findAll();
+            $genres = $genreRepository->findAll();
+            $studios = $studioRepository->findAll();
+            return $this->render('movie/index.html.twig', [
+                'movies' => $movies,
+                'genres' => $genres,
+                'studios' => $studios,
+                'actors' => $actors
+            ]);
+        }
     }
 
     #[Route('/genre/{id}', name: 'moviesByGenre')]

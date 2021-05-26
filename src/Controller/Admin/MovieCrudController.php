@@ -8,6 +8,7 @@ use EasyCorp\Bundle\EasyAdminBundle\Field\AssociationField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\BooleanField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\DateField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\DateTimeField;
+use EasyCorp\Bundle\EasyAdminBundle\Field\HiddenField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\ImageField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextEditorField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
@@ -30,10 +31,11 @@ class MovieCrudController extends AbstractCrudController
             ImageField::new('image')->setUploadDir("/public/assets/upload/images")
                                                 ->setBasePath('assets/upload/images'),
             BooleanField::new('seen'),
-            BooleanField::new('watchList'),
+            BooleanField::new('watchList')->hideOnIndex(),
             AssociationField::new('studio'),
-            AssociationField::new('actors'),
-            AssociationField::new('genres')
+            AssociationField::new('actors')->autocomplete(),
+            AssociationField::new('genres'),
+            AssociationField::new('users')->hideOnForm()
         ];
     }
 

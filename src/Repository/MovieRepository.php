@@ -3,6 +3,7 @@
 namespace App\Repository;
 
 use App\Entity\Movie;
+use ContainerX32niQF\getEntityRepositoryService;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
@@ -18,6 +19,28 @@ class MovieRepository extends ServiceEntityRepository
     {
         parent::__construct($registry, Movie::class);
     }
+
+     /**
+      * @return Movie[] Returns an array of Movie objects by user and genre
+      */
+
+    public function findByUserGenre($userId, $genreId)
+    {
+        return $this->createQueryBuilder('m')
+            ->innerJoin('m.users', 'u')
+            ->where('u.id = :user_id')
+            ->setParameter('user_id', $userId)
+            ->innerJoin('m.genres', 'g')
+            ->andWhere('g.id = :genre_id')
+            ->setParameter('genre_id', $genreId)
+//            ->orderBy('m.id', 'ASC')
+//            ->setMaxResults(10)
+            ->getQuery()
+            ->getResult()
+        ;
+    }
+
+
 
     // /**
     //  * @return Movie[] Returns an array of Movie objects

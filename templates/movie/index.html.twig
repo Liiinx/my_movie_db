@@ -19,7 +19,11 @@
         {% elseif studio is defined %}
             <h1 style="text-align: center">{{ studio.name }} movies</h1>
         {% else %}
-            <h1 style="text-align: center">All movies</h1>
+            {% if is_granted('ROLE_USER') %}
+                <h1 style="text-align: center">{{ user.name }}'s movies</h1>
+            {% else %}
+                <h1 style="text-align: center">All movies</h1>
+            {% endif %}
     {% endif %}
     <div class="row">
         <div class="col-9">
@@ -43,10 +47,23 @@
                                                 white-space: nowrap;
                                                 overflow: hidden; text-overflow: ellipsis;">Synopsis : {{ movie.synopsis|raw }}</p>
                                 {% if movie.seen %}
-                                    <p class="card-taxt">J'ai vu le film</p>
+                                    <p class="card-text">J'ai vu le film</p>
                                 {% else %}
-                                    <p class="card-taxt">Pas vu le film</p>
+                                    <p class="card-text">Pas vu le film</p>
                                 {% endif %}
+                                    <p class="card-text">Genres :
+                                    <ul>
+                                    {% if is_granted('ROLE_USER') %}
+                                    {% for genre in movie.genres %}
+                                        <li>
+                                            <a href="{{ path('userMoviesByGenre', { 'userId': user.id, 'genreId': genre.id  }) }}">
+                                                {{ genre.name }}
+                                            </a>
+                                        </li>
+                                    {% endfor %}
+                                    {% endif %}
+                                    </ul>
+                                    </p>
                             </div>
                         </div>
                     </div>
